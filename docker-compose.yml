@@ -1,0 +1,11 @@
+services:
+  neet-ai:
+    build: .
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    volumes:
+      - neet_data:/data
+volumes:
+  neet_data:

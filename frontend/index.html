@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>NEET AI — Practice</title>
+<link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <span class="logo">NA</span>
+    <div>
+      <h1>NEET AI</h1>
+      <p class="tagline">Topics, explanations &amp; endless practice sets</p>
+    </div>
+  </div>
+  <div class="topbar-right">
+    <span id="modeBadge" class="badge badge-muted" title="Question source">loading…</span>
+    <span id="bankBadge" class="badge badge-muted">bank: 0</span>
+    <button id="navProgress" class="ghost-btn">My Progress</button>
+  </div>
+</header>
+
+<main>
+  <!-- ---------------- TOPICS VIEW ---------------- -->
+  <section id="viewTopics" class="view">
+    <div class="subject-tabs" id="subjectTabs"></div>
+    <div class="layout">
+      <div class="col-list">
+        <div class="col-head">
+          <h2 id="listTitle">Topics</h2>
+          <span id="topicCount" class="muted"></span>
+        </div>
+        <div id="topicList" class="topic-list"></div>
+      </div>
+      <aside class="col-detail">
+        <div id="topicDetail" class="detail-empty">
+          <p>Pick a topic to read a short explanation and start a practice set.</p>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ---------------- QUIZ VIEW ---------------- -->
+  <section id="viewQuiz" class="view hidden">
+    <div class="quiz-head">
+      <div>
+        <h2 id="quizTitle">Practice</h2>
+        <p id="quizMeta" class="muted"></p>
+      </div>
+      <div class="quiz-head-right">
+        <div id="timer" class="timer">00:00</div>
+        <button id="quitQuiz" class="ghost-btn">Quit</button>
+      </div>
+    </div>
+
+    <div class="quiz-body">
+      <div class="quiz-main">
+        <div class="q-progress">
+          <div class="q-progress-bar"><span id="qProgressFill"></span></div>
+          <span id="qCounter" class="muted">Question 1 of 20</span>
+        </div>
+        <div class="q-card">
+          <p id="qText" class="q-text"></p>
+          <div id="qOptions" class="q-options"></div>
+        </div>
+        <div class="q-actions">
+          <button id="prevBtn" class="ghost-btn">Previous</button>
+          <button id="nextBtn" class="primary-btn">Next</button>
+          <button id="submitBtn" class="submit-btn hidden">Submit test</button>
+        </div>
+      </div>
+      <aside class="quiz-palette">
+        <p class="muted small">Question palette</p>
+        <div id="palette" class="palette"></div>
+        <div class="legend">
+          <span><i class="dot dot-answered"></i> Answered</span>
+          <span><i class="dot dot-current"></i> Current</span>
+          <span><i class="dot dot-unseen"></i> Not visited</span>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ---------------- REVIEW VIEW ---------------- -->
+  <section id="viewReview" class="view hidden">
+    <div class="result-head">
+      <h2 id="resultTitle">Result</h2>
+      <p id="resultSummary" class="muted"></p>
+    </div>
+    <div class="score-row" id="scoreRow"></div>
+    <h3 class="section-title">Answer review</h3>
+    <div id="reviewList" class="review-list"></div>
+    <div class="review-actions">
+      <button id="retryBtn" class="primary-btn">Practice again</button>
+      <button id="backTopicsBtn" class="ghost-btn">Back to topics</button>
+    </div>
+  </section>
+
+  <!-- ---------------- PROGRESS VIEW ---------------- -->
+  <section id="viewProgress" class="view hidden">
+    <div class="result-head">
+      <h2>My Progress</h2>
+      <p class="muted">Your saved attempts and accuracy.</p>
+    </div>
+    <div class="score-row" id="statRow"></div>
+    <h3 class="section-title">Attempt history</h3>
+    <div id="attemptList" class="attempt-list"></div>
+    <div class="review-actions">
+      <button id="progressBack" class="ghost-btn">Back to topics</button>
+    </div>
+  </section>
+</main>
+
+<div id="toast" class="toast hidden"></div>
+
+<script src="/static/app.js"></script>
+</body>
+</html>
