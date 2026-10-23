@@ -135,6 +135,12 @@ async def generate_questions(
         "temperature": 0.7,
         "response_format": {"type": "json_object"},
     }
+    # Sarvam-105B spends its default token budget on reasoning first. Disable
+    # reasoning for this JSON task and leave output budget for the requested MCQs.
+    if "sarvam.ai" in DEFAULT_BASE_URL.lower():
+        payload["reasoning_effort"] = None
+        payload["max_tokens"] = min(12000, max(2048, count * 450))
+
     headers = {
         "Authorization": f"Bearer {key}",
         "Content-Type": "application/json",
@@ -150,9 +156,16 @@ async def generate_questions(
             resp.raise_for_status()
 
     data = resp.json()
-    content = data["choices"][0]["message"]["content"]
+    try:
+        content = data["choices"][0]["message"].get("content")
+    except (KeyError, IndexError, TypeError) as exc:
+        raise ValueError("Model response did not contain a chat message") from exc
+    if not content:
+        finish_reason = data.get("choices", [{}])[0].get("finish_reason", "unknown")
+        raise ValueError(f"Model returned empty content (finish_reason={finish_reason})")
     parsed = _extract_json(content)
     questions = _normalise(parsed.get("questions", []))
     if not questions:
         raise ValueError("Model returned no usable questions")
     return questions
+
