@@ -17,6 +17,7 @@ Endpoints:
 
 from __future__ import annotations
 
+import logging
 import os
 from typing import Any
 
@@ -143,6 +144,7 @@ async def practice(req: PracticeRequest):
                 added = db.save_questions(req.topic_id, topic["subject"], fresh, source="llm")
                 source = "llm" if added else "cache"
             except Exception as exc:  # noqa: BLE001 - surface as 502 to client
+                logging.exception("Question generation failed for topic %s", req.topic_id)
                 # If generation fails but we have some cache, still serve it.
                 if have == 0:
                     raise HTTPException(502, f"Question generation failed: {exc}")
